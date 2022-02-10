@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="#{html.corsi.title}"></title>
+</head>
+<body>
+<section>
+    <h5 th:if="${corsi.size()==0 && isAdmin.getRole().equals('ADMIN')}">Al momento non sono presenti corsi, per aggiungerne uno recarsi presso il pannello dell'amministratore</h5>
+    <h5 th:if="${corsi.size()==0 && isAdmin.getRole().equals('CLIENTE')}">Al momento non sono presenti corsi, per potersi prenotare un'amministratore deve necessariamente aggiungerne uno</h5>
+    <h1 th:text="#{html.corsi.header}"></h1>
+    <h1 th:if="${isAdmin}==null">Effettua il login oppure registrati per vedere i dati</h1>
+    <div>
+        <table th:if="${isAdmin != null && corsi.size()!=0}">
+            <thead>
+                <tr>
+                    <th scope="col" th:text="#{html.forms.name}"></th>
+                    <th scope="col" th:text="#{html.forms.description}"></th>
+                    <th scope="col" th:text="#{html.rolescorso.personal}"></th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cors : ${corsi}" role="row">
+                <td><a th:href="@{|/corso/${cors.getKey().getId()}/|}" th:text="${cors.getKey().getName()}"></a></td>
+                <td th:text="${cors.getKey().getDifficolta()}"></td>
+                <td><a th:href="@{|/profile/${cors.getValue().getUserName()}/|}" th:text="${cors.getValue().getUserName()}"></a></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</section>
+</body>
+</html>

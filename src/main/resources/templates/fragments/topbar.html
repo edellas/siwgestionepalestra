@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+    <body>
+    <div class="navMenu">
+        <ul th:fragment="topbar" id="accordionTopbar" class="menu">
+               <th:block>
+            <a th:href="@{/}" th:text="#{html.topbar.link.homepage}"></a>
+            </th:block>
+                <a sec:authorize="isAuthenticated()" th:href="@{/corsi}" th:text="#{html.topbar.link.corsi}"></a>
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/utenti}" th:text="#{html.topbar.link.users}"></a>
+
+            <th:block sec:authorize="isAuthenticated()">
+
+
+                <div class="userSection">
+                    <a th:href="@{/profile}" th:text="#{html.topbar.link.profile}"></a>
+                    <a th:href="@{/logout}" th:text="#{html.topbar.link.logout}"></a>
+                </div>
+            </th:block>
+            <th:block sec:authorize="hasAuthority('ADMIN')">
+
+                <a th:href="@{/admin}" th:text="#{html.topbar.link.admin}"></a>
+                <a th:href="@{/personals}">Personal Trainers</a>
+            </th:block>
+
+            <th:block sec:authorize="isAnonymous()">
+                <div class="userSection">
+                    <a th:href="@{/login}" th:text="#{html.topbar.link.login}"></a>
+                    <a th:href="@{/register}" th:text="#{html.topbar.link.register}"></a>
+                </div>
+            </th:block>
+        </ul>
+    </div>
+    </body>
+</html>

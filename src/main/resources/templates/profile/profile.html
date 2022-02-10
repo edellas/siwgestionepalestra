@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="#{html.profile.title(${credentials.getUserName()})}"></title>
+</head>
+<body>
+<section>
+    <div>
+        <h1 th:text="#{html.profile.header}"></h1>
+        <div class="editProfile">
+            <a th:if="${credentials.getId() == visitor.getId()}" th:href="@{|/profile/${credentials.getUserName()}/edit|}"><i></i> <span th:text="#{html.profile.editProfile}"></span></a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col" th:text="#{html.forms.username}"></th>
+            <th scope="col" th:text="#{html.forms.name}"></th>
+            <th scope="col" th:text="#{html.forms.lastName}"></th>
+            <th scope="col" th:text="#{html.forms.role}"></th>
+            <th scope="col" th:text="#{html.forms.since}"></th>
+            <th scope="col" th:text="#{html.forms.last}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td th:text="${credentials.getUserName()}"></td>
+        <td th:text="${credentials.getUser().getFirstName()}"></td>
+        <td th:text="${credentials.getUser().getLastName()}"></td>
+        <td th:text="${credentials.getRole()}"></td>
+        <td th:text="${credentials.getUser().getCreationTimestamp()}"></td>
+        <td th:text="${credentials.getUser().getLastUpdateTimestamp()}"></td>
+        </tbody>
+    </table>
+    <div>
+        <div th:if="!${(credentials.getRole())=='ADMIN'}">
+            <div>
+                <div class="corsi">
+                    <h6 style="font-size: large" th:text="#{html.profile.corsi}"></h6>
+                </div>
+                <div>
+                    <div>
+                        <table>
+                            <thead>
+                                <tr th:if="(${credentials.getUser().getCorsi().size()}) != 0">
+                                    <th scope="col" th:text="#{html.forms.name}"></th>
+                                    <th scope="col" th:text="#{html.forms.description}"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="(${credentials.getUser().getCorsi().size()}) == 0">
+                                    <td th:text="#{html.misc.none}"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr th:each="cors : ${credentials.getUser().getCorsi()}" role="row">
+                                    <td><a th:href="@{|/corso/${cors.getId()}|}" th:text="${cors.getName()}"></a></td>
+                                    <td th:text="${cors.getDifficolta()}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

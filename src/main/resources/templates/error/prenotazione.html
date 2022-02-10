@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title>Error - Esame SIW 2021</title>
+</head>
+<body>
+<section>
+    <div class="un">
+
+        <div>
+            <div>Errore</div>
+            <p>Non è possibile prenotarsi lo stesso giorno alla stessa ora</p>
+            <a th:href="@{/}">← Back to Homepage</a>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

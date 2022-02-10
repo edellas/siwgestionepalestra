@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:fragment="layout (title, content, scripts)">
+    <head>
+        <div class="nomeApp" th:fragment="nomeApp" th:text="PlanningCorsi"></div>
+        <th:block th:replace="fragments/header :: headerStart"></th:block>
+        <th:block th:replace="fragments/header :: headerEnd"></th:block>
+        <div th:replace="fragments/topbar :: topbar"></div>
+    </head>
+    <body>
+        <div id="wrapper" class="wrapper">
+
+            <div id="content-wrapper">
+                <div id="content">
+                    <div>
+                        <div th:replace="${content}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <footer style="text-align: center">
+            <div>
+                <div>
+                    <span th:text="#{html.credits}"></span>
+                </div>
+            </div>
+        </footer>
+
+
+        <th:block th:replace="${scripts}"></th:block>
+    </body>
+</html>

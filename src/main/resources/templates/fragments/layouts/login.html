@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:fragment="layout (title, content, scripts)">
+
+<head>
+    <meta charset="UTF-8" />
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <th:block th:replace="fragments/header :: headerStart"></th:block>
+    <title th:replace="${title}">Title</title>
+
+    <th:block th:replace="fragments/header :: headerEnd"></th:block>
+</head>
+<body>
+    <div th:replace="${content}"></div>
+
+
+    <th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

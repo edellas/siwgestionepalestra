@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title th:text="#{html.login.title}"></title>
+</head>
+<body>
+<section class="main">
+    <div>
+        <h1 th:text="#{html.login.header}"></h1>
+    </div>
+    <div th:if="${param.error}" th:text="#{html.login.error}"></div>
+    <div th:if="${param.logout}" th:text="#{html.login.logout}"></div>
+
+    <th:block sec:authorize="isAuthenticated()">
+        <p th:text="#{html.login.welcome(${visitor.getUser().getFirstName()}, ${visitor.getUser().getLastName()})}"></p>
+    </th:block>
+    <th:block sec:authorize="isAnonymous()">
+        <form th:action="@{/login}" method="post">
+            <div>
+                <input class="un" type="text" name="username" th:placeholder="#{html.forms.username}">
+            </div>
+            <div>
+                <input class="pass" type="password" name="password" th:placeholder="#{html.forms.password}">
+            </div>
+            <button class="submit" type="submit" th:text="#{html.login.submit}"></button>
+        </form>
+        <div class="tt">
+            <a class="ur" th:href="@{/register}" th:text="#{html.login.notmember}"></a>
+            <br><br>
+            <a class="ur" th:href="@{/}" th:text="#{html.login.backhomepage}"></a>
+        </div>
+    </th:block>
+</section>
+</body>
+</html>

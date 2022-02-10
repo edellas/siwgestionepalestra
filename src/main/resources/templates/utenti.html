@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="#{html.users.title}"></title>
+</head>
+<body>
+<section>
+    <h1 th:text="#{html.users.header}"></h1>
+    <h1 th:if="${isAdmin}==null">Effettua il login oppure registrati per vedere i dati</h1>
+    <div>
+        <div>
+            <div>
+                <div>
+                    <div>
+                        <div th:if="${isAdmin}!=null">
+                            <h2 style="color: #abcdef" th:text="#{html.users.header}"></h2>
+                            <table class="tableusers" th:if="${isAdmin}!=null">
+                                <thead>
+                                <tr>
+                                    <th scope="col" th:text="#{html.forms.username}"></th>
+                                    <th scope="col" th:text="#{html.forms.firstName}"></th>
+                                    <th scope="col" th:text="#{html.forms.lastName}"></th>
+                                    <th scope="col" th:text="#{html.profile.ownedCorso}"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${credentials} == 0">
+                                    <td th:text="#{html.misc.none}"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr th:each="cred : ${credentials}" role="row">
+                                    <div class="corsi" th:if="${cred.getRole().equals('CLIENTE')}">
+                                        <td><a th:href="@{|/profile/${cred.getUserName()}/|}" th:text="${cred.getUserName()}"></a></td>
+                                        <td th:text="${cred.getUser().getFirstName()}"></td>
+                                        <td th:text="${cred.getUser().getLastName()}"></td>
+                                        <td th:text="${cred.getUser().getCorsi().size()}"></td>
+                                    </div>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

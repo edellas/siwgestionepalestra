@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="#{html.users.title}"></title>
+</head>
+<body>
+<section>
+    <h1 th:text="#{html.personal.header}"></h1>
+    <h5 th:if="${personals.size()==0}">Al momento non sono presenti personal trainer, per aggiungerne uno recarsi presso il pannello dell'amministratore</h5>
+    <h1 th:if="${visitor.getRole()}==null">Effettua il login oppure registrati per vedere i dati</h1>
+    <div>
+        <div>
+            <div>
+                <div>
+                    <div>
+                        <div th:if="${visitor.getRole().equals('ADMIN') && personals.size()!=0}">
+                            <h2 style="color: #abcdef">Personals</h2>
+                            <table class="tableusers">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Cognome</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${credentials} == 0">
+                                    <td th:text="#{html.misc.none}"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr th:each="personal : ${personals}" role="row">
+                                        <td><a th:href="@{|/personal/${personal.getId()}/|}" th:text="${personal.getNome()}"></a></td>
+                                        <td th:text="${personal.getCognome()}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

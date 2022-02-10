@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="${editing} ? #{html.corso.edit.title(${personalForm.getId()})} : #{html.corso.edit.title.create}"></title>
+</head>
+<body>
+<section>
+    <div>
+        <h1 th:text="${editing} ? #{html.corso.edit.header(${personalForm.getId()})} : #{html.corso.edit.header.create}"></h1>
+    </div>
+    <div class="un">
+        <form th:action="${editing} ?  @{|/personal/${personalForm.getId()}/edit|} : @{|/personals/create|}" method="post">
+            <div>
+                <input class="un" type="text" id="nome" name="nome" th:field="${personalForm.nome}" th:placeholder="#{html.forms.name}">
+                <div th:if="${#fields.hasErrors('personalForm.nome')}" th:errors="${personalForm.nome}" style="color: red"></div>
+            </div>
+            <div>
+                <input class="un" type="text" id="cognome" name="cognome" th:field="${personalForm.cognome}" th:placeholder="#{html.forms.lastName}">
+                <div th:if="${#fields.hasErrors('personalForm.cognome')}" th:errors="${personalForm.cognome}" style="color: red"></div>
+            </div>
+            <button class="un" type="submit" th:text="${editing} ? #{html.corso.edit.submit.save} : #{html.corso.edit.submit.create}"></button>
+        </form>
+    </div>
+</section>
+</body>
+</html>

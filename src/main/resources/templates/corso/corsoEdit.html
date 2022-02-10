@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="${editing} ? #{html.corso.edit.title(${corsoForm.getName()})} : #{html.corso.edit.title.create}"></title>
+</head>
+<body>
+<section>
+    <div>
+        <h1 th:text="${editing} ? #{html.corso.edit.header(${corsoForm.getName()})} : #{html.corso.edit.header.create}"></h1>
+    </div>
+    <div class="un">
+    <form th:action="${editing} ?  @{|/corso/${corsoForm.getId()}/edit|} : @{|/corso/create|}" method="post">
+        <div>
+            <input class="un" type="text" id="name" name="name" th:field="${corsoForm.name}" th:placeholder="#{html.forms.name}">
+            <div th:if="${#fields.hasErrors('corsoForm.name')}" th:errors="${corsoForm.name}" style="color: red"></div>
+        </div>
+        <select class="un" th:field="${corsoForm.difficolta}" th:placeholder="#{html.forms.role}" required>
+            <option value="">Scegli Difficolta...</option><option value="Base">Base</option><option value="Intermedio">Intermedio</option><option value="Avanzato">Avanzato</option></select>
+        <div th:if="${#fields.hasErrors('corsoForm.difficolta')}" th:errors="${corsoForm.difficolta}" style="color: red"></div>
+        <div>
+            <label for="postiDisponibili" th:text="#{html.forms.postiDisponili}"></label>
+            <input class="un" type="number" id="postiDisponibili" name="postiDisponibili" th:field="${corsoForm.postiDisponibili}" th:placeholder="#{html.forms.postiDisponili}">
+            <div th:if="${#fields.hasErrors('corsoForm.postiDisponibili')}" th:errors="${corsoForm.postiDisponibili}" style="color: red"></div>
+        </div>
+        <div>
+            <select class="un" th:field="${corsoForm.giornoErogazione}" th:placeholder="#{html.corso.data}" required>
+                <option value="">Scegli il giorno di erogazione...</option>
+                <option value="Lunedi">Lunedi</option>
+                <option value="Martedi">Martedi</option>
+                <option value="Mercoledi">Mercoledi</option>
+                <option value="Giovedi">Giovedi</option>
+                <option value="Venerdi">Venerdi</option>
+                <option value="Sabato">Sabato</option>
+                <option value="Domenica">Domenica</option>
+            </select>
+            <div th:if="${#fields.hasErrors('corsoForm.giornoErogazione')}" th:errors="${corsoForm.giornoErogazione}" style="color: red"></div>
+        </div>
+        <div>
+            <select class="un" th:field="${corsoForm.fasciaOraria}" th:placeholder="#{html.corso.fasciaOraria}" required>
+                <option value="">Scegli la fascia oraria...</option>
+                <option value="7:00-8:00">7:00-8:00</option>
+                <option value="8:00-9:00">8:00-9:00</option>
+                <option value="9:00-10:00">9:00-10:00</option>
+                <option value="10:00-11:00">10:00-11:00</option>
+                <option value="11:00-12:00">11:00-12:00</option>
+                <option value="12:00-13:00">12:00-13:00</option>
+                <option value="15:00-16:00">15:00-16:00</option>
+                <option value="16:00-17:00">16:00-17:00</option>
+                <option value="17:00-18:00">17:00-18:00</option>
+                <option value="18:00-19:00">18:00-19:00</option>
+            </select>
+            <div th:if="${#fields.hasErrors('corsoForm.fasciaOraria')}" th:errors="${corsoForm.fasciaOraria}" style="color: red"></div>
+        </div>
+        <div>
+            <select class="un" th:field="${corsoForm.personalTrainer.id}" required>
+                <option value="" selected>----Seleziona Personal----</option>
+                <option th:each="personal : ${listPersonal}" th:value="${personal.id}" th:text="${personal.nome} + ${personal.cognome}"></option>
+            </select>
+        </div>
+        <button class="un" type="submit" th:text="${editing} ? #{html.corso.edit.submit.save} : #{html.corso.edit.submit.create}"></button>
+    </form>
+    </div>
+</section>
+</body>
+</html>

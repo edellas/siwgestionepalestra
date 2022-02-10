@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="${corso} ? #{html.corso.title(${corso.getName()})} : #{html.corso.title.notfound}"></title>
+</head>
+<body>
+<section>
+    <div th:if="!${corso}">
+        <div>
+            <h1 th:text="#{html.corso.header.notfound}"></h1>
+        </div>
+    </div>
+    <div>
+        <h1 th:text="#{html.corso.header}"></h1>
+        <div th:if="${visitor.getRole().equals('ADMIN') || visitor.getUser().getId() == corso.getOwner().getId()}">
+            <a th:href="@{|/corso/${corso.getId()}/edit|}"><i></i> <span th:text="#{html.corso.editcorso}"></span></a>
+            <a th:href="@{|/corso/${corso.getId()}/delete|}"><i></i> <span th:text="#{html.corso.deletecorso}"></span></a>
+        </div>
+    </div>
+    <table class="tableusers">
+        <thead>
+        <tr>
+            <th scope="col" th:text="#{html.forms.name}"></th>
+            <th scope="col" th:text="#{html.forms.description}"></th>
+            <th scope="col">Personal</th>
+            <th scope="col" th:text="#{html.rolescorso.partecipanti}"></th>
+            <th scope="col" th:text="#{html.corso.data}"></th>
+            <th scope="col" th:text="#{html.corso.fasciaOraria}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${corso.getName()}"></td>
+            <td th:text="${corso.getDifficolta()}"></td>
+            <td th:text="${corso.getPersonalTrainer().nome + ' ' + corso.getPersonalTrainer().cognome}"></td>
+            <td th:text="${corso.postiDisponibili}"></td>
+            <td th:text="${corso.giornoErogazione}"></td>
+            <td th:text="${corso.fasciaOraria}"></td>
+        </tr>
+        </tbody>
+    </table>
+        <div>
+            <ul th:if="${visitor.getRole().equals('ADMIN')}">
+                <li th:text="#{html.rolescorso.members}"></li>
+                <tr th:each="user : ${corso.getMembers()}">
+                    <td th:text="${user.getFirstName()} + ' ' + ${user.getLastName()} + ' ; '"></td>
+                </tr>
+            </ul>
+        </div>
+
+        <th:block th:if="${visitor.getRole().equals('ADMIN')}">
+
+            <p th:text="|#{html.corso.created}: ${{corso.getCreationTimestamp()}}|"></p>
+            <p th:text="|#{html.corso.lastUpdate}: ${{corso.getLastUpdateTimestamp()}}|"></p>
+        </th:block>
+    <div class="un" th:if="${visitor.getRole()!='ADMIN'}">
+        <a style="color: green" th:if="${corso.getPostiDisponibili()!=0}" th:href="@{|/corso/${corso.getId()}/prenota|}"><i></i> <span th:if="!${ids.contains(visitor.getUser().getId())}" th:text="#{html.corso.prenota}"></span></a>
+        <a style="color: red" th:href="@{|/corso/${corso.getId()}/disiscrivi|}"><i></i> <span th:if="${ids.contains(visitor.getUser().getId())}" th:text="#{html.corso.unsubscribe}"></span></a>
+    </div>
+</section>
+</body>
+</html>

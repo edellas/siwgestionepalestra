@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+    <head>
+        <title th:text="#{html.index.title}"></title>
+    </head>
+    <body>
+        <section>
+            <h1 style="text-align: center">Benvenuti nel portale per la gestione dei corsi di una palestra</h1>
+            <h2>All'interno dell'applicativo
+                potrai trovare una serie di funzionalita per poter gestire al meglio i corsi e se sei un cliente potrai tenere sotto traccia tutti i tuoi corsi prenotati</h2>
+            <h3>Effettua il login/registrati per poter utilizzare il sistema.</h3>
+            <ul>
+                <h3>Un'amministratore avrà la possibilità di</h3>
+                <li style="list-style-position: inside;">Aggiungere Personal Trainers</li>
+                <li style="list-style-position: inside;">Aggiungere un Corso</li>
+                <li style="list-style-position: inside;">Inserire un Personal per un determinato corso.</li>
+                <li style="list-style-position: inside;">Visualizzare le informazioni dei clienti.</li>
+                <h3>Un cliente avrà la possibilita di</h3>
+                <li style="list-style-position: inside;">Vedere le informazioni di un corso.</li>
+                <li style="list-style-position: inside;">Prenotarsi a un determinato corso.</li>
+                <li style="list-style-position: inside;">Visualizzare una tabella riassuntiva dei corsi prenotati.</li>
+            </ul>
+        </section>
+    </body>
+</html>

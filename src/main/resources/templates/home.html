@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="#{html.home.title}"></title>
+</head>
+<body>
+<section>
+    <h1 th:text="#{html.home.header}"></h1>
+
+    <div>
+        <h2 th:text="Benvenuto + ' ' + ${isAdmin.getUserName()}"></h2>
+        <div th:if="${isAdmin.getRole().equals('ADMIN')}">
+            <ul>
+                <h3>Sei un'amministratore, avrai la possibilità di</h3>
+                <li style="list-style-position: inside;">Aggiungere Personal Trainers</li>
+                <li style="list-style-position: inside;">Aggiungere un Corso</li>
+                <li style="list-style-position: inside;">Inserire un Personal per un determinato corso.</li>
+                <li style="list-style-position: inside;">Visualizzare le informazioni dei clienti.</li>
+            </ul>
+        </div>
+        <div th:if="${isAdmin.getRole().equals('CLIENTE')}">
+            <ul>
+                <h3>Sei un cliente, avrai la possibilità di</h3>
+                <li style="list-style-position: inside;">Vedere le informazioni di un corso.</li>
+                <li style="list-style-position: inside;">Prenotarsi a un determinato corso.</li>
+                <li style="list-style-position: inside;">Visualizzare una tabella riassuntiva dei corsi prenotati.</li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div>
+            <div>
+                <table th:if="${corsi.size()!=0}">
+                <div th:if="!${isAdmin.getRole().equals('ADMIN')}">
+                    <h6 th:text="#{html.profile.ownedCorso}"></h6>
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="#{html.corso.data}"></th>
+                        <th scope="col" th:text="#{html.corso.fasciaOraria}"></th>
+                        <th scope="col" th:text="#{html.forms.name}"></th>
+                        <th scope="col" th:text="#{html.forms.description}"></th>
+                    </tr>
+                    </thead>
+                <tr th:each="cors : ${corsi}" role="row">
+                   <td th:text="${cors.giornoErogazione}"></td>
+                    <td th:text="${cors.fasciaOraria}"></td>
+                    <td><a th:href="@{|/corso/${cors.getId()}/|}" th:text="${cors.getName()}"></a></td>
+                    <td th:text="${cors.getDifficolta()}"></td>
+                </tr>
+                </div>
+                </table>
+                </div>
+                <div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${corsi.size()}">
+            <div>
+                <div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

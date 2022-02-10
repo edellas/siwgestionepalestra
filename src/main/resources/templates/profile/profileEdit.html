@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="#{html.profileEdit.title(${credentials.getUserName()})}"></title>
+</head>
+<body>
+<section>
+    <div>
+        <h1 th:text="#{html.profileEdit.header(${credentials.getUserName()})}"></h1>
+    </div>
+
+    <form class="un" th:action="@{|/profile/${credentials.getUserName()}/edit|}" method="post">
+        <div>
+            <label for="firstName" th:text="#{html.forms.firstName}"></label>
+            <input class="un" type="text" id="firstName" name="firstName" th:field="${userForm.firstName}" placeholder="First name">
+            <div th:if="${#fields.hasErrors('userForm.firstName')}" th:errors="${userForm.firstName}"></div>
+        </div>
+        <div>
+            <label for="lastName" th:text="#{html.forms.lastName}"></label>
+            <input class="un" type="text" id="lastName" name="lastName" th:field="${userForm.lastName}" placeholder="Last name">
+            <div th:if="${#fields.hasErrors('userForm.lastName')}" th:errors="${userForm.lastName}"></div>
+        </div>
+        <button class="un" type="submit" th:text="#{html.profileEdit.save}"></button>
+    </form>
+</section>
+</body>
+</html>

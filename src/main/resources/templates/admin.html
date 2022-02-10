@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layouts/base :: layout(~{::title}, ~{::section}, ~{})}">
+<head>
+    <title th:text="#{html.admin.title}"></title>
+</head>
+<body>
+<section>
+    <div th:if="${isAdmin.getRole().equals('ADMIN')}">
+        <a class="creac" style="background-color: #abcdef" th:href="@{/corso/create}" th:text="#{html.home.create.corso}"></a>
+        <a class="creac" style="background-color: #abcdef" th:href="@{/personals/create}">Aggiungi un personal</a>
+    </div>
+</section>
+</body>
+</html>
